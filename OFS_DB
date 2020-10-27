@@ -1,0 +1,562 @@
+-- MySQL Administrator dump 1.4
+--
+-- ------------------------------------------------------
+-- Server version	5.5.5-10.1.34-MariaDB
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+--
+-- Create schema ofs
+--
+
+CREATE DATABASE IF NOT EXISTS ofs;
+USE ofs;
+
+--
+-- Definition of table `address`
+--
+
+DROP TABLE IF EXISTS `address`;
+CREATE TABLE `address` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `address` varchar(500) DEFAULT NULL,
+  `city` varchar(50) DEFAULT NULL,
+  `state` varchar(50) DEFAULT NULL,
+  `pincode` varchar(50) DEFAULT NULL,
+  `mobile` varchar(20) DEFAULT NULL,
+  `customer_id` int(11) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `customer_id` (`customer_id`),
+  CONSTRAINT `address_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `address`
+--
+
+/*!40000 ALTER TABLE `address` DISABLE KEYS */;
+INSERT INTO `address` (`id`,`address`,`city`,`state`,`pincode`,`mobile`,`customer_id`,`name`) VALUES 
+ (1,'s-123,kiran colony','allahabad','up','462003','8877664455',1,'arpit mishra'),
+ (2,'s302','bhopal','mp','462003','9988774455',9,'kedar mohanta'),
+ (3,'D39','indore','mp','426003','9988774455',9,'kedar mohanta');
+/*!40000 ALTER TABLE `address` ENABLE KEYS */;
+
+
+--
+-- Definition of table `admin`
+--
+
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(25) DEFAULT NULL,
+  `userid` varchar(100) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `image` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `admin`
+--
+
+/*!40000 ALTER TABLE `admin` DISABLE KEYS */;
+INSERT INTO `admin` (`id`,`name`,`userid`,`password`,`image`) VALUES 
+ (1,'vikas pathak','vikas','pathak',NULL);
+/*!40000 ALTER TABLE `admin` ENABLE KEYS */;
+
+
+--
+-- Definition of table `cat_wear_r`
+--
+
+DROP TABLE IF EXISTS `cat_wear_r`;
+CREATE TABLE `cat_wear_r` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cat_id` int(11) DEFAULT NULL,
+  `weartype_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cat_id` (`cat_id`),
+  KEY `weartype_id` (`weartype_id`),
+  CONSTRAINT `cat_wear_r_ibfk_1` FOREIGN KEY (`cat_id`) REFERENCES `category` (`id`),
+  CONSTRAINT `cat_wear_r_ibfk_2` FOREIGN KEY (`weartype_id`) REFERENCES `wear_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `cat_wear_r`
+--
+
+/*!40000 ALTER TABLE `cat_wear_r` DISABLE KEYS */;
+INSERT INTO `cat_wear_r` (`id`,`cat_id`,`weartype_id`) VALUES 
+ (1,1,1),
+ (2,2,1),
+ (3,3,1),
+ (4,4,1),
+ (5,5,2),
+ (6,6,2),
+ (7,7,2),
+ (8,8,1),
+ (9,9,1),
+ (10,1,2),
+ (11,2,2),
+ (12,3,2),
+ (13,4,2),
+ (14,8,2),
+ (15,9,2),
+ (16,1,3),
+ (17,4,3),
+ (18,5,3),
+ (19,7,3),
+ (20,21,3);
+/*!40000 ALTER TABLE `cat_wear_r` ENABLE KEYS */;
+
+
+--
+-- Definition of table `category`
+--
+
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  `weartype_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `weartype_id` (`weartype_id`),
+  CONSTRAINT `category_ibfk_1` FOREIGN KEY (`weartype_id`) REFERENCES `wear_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `category`
+--
+
+/*!40000 ALTER TABLE `category` DISABLE KEYS */;
+INSERT INTO `category` (`id`,`name`,`weartype_id`) VALUES 
+ (1,'jeans',1),
+ (2,'casual shirt',1),
+ (3,'formal shirt',1),
+ (4,'t-shirt',1),
+ (5,'top',2),
+ (6,'saree',2),
+ (7,'lehenga',2),
+ (8,'blazer',1),
+ (9,'kurta',1),
+ (21,'fancy wear',3);
+/*!40000 ALTER TABLE `category` ENABLE KEYS */;
+
+
+--
+-- Definition of table `customer`
+--
+
+DROP TABLE IF EXISTS `customer`;
+CREATE TABLE `customer` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  `gender` varchar(10) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `userid` varchar(100) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `mobile` varchar(15) DEFAULT NULL,
+  `image` char(200) DEFAULT NULL,
+  `role` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customer`
+--
+
+/*!40000 ALTER TABLE `customer` DISABLE KEYS */;
+INSERT INTO `customer` (`id`,`name`,`gender`,`email`,`userid`,`password`,`mobile`,`image`,`role`) VALUES 
+ (1,'Arpit mishra','male','arpitmishra8788@gmail.com','arpit8788','arpit8788@','7470','img/arpit.jpg','customer'),
+ (2,'Arpit mishra','male','arpitmisra8788@gmail.com','arpit8788@','arpit8788@','7470397253',NULL,'customer'),
+ (3,'Abhineet chaubey','male','abhneet788@gmail.com','abhineet788','abhineet788','7470397252',NULL,'customer'),
+ (4,'rahul','male','rahul@gmail.com','rahul12345','Rahul12345','556254522',NULL,'customer'),
+ (5,'kirti','female','kirti@gmail.com','kirti123','Kirti12345','5959595959',NULL,'customer'),
+ (6,'keshav','male','kaku@gmail.com','kaeshav12345','Keshav12345','3344334433',NULL,'cusotmer'),
+ (7,'raju1','male','raju1@gmail.com','rajesh1@gmail.com','raju12345','393999992','media/customer/B.jpg','cusotmer'),
+ (8,'Arpit mishra','male','arpitmisra@gmail.com','arpitadmin','arpitadmin','7470397250','media/customer/aZ6SX5Nr43.jpg','admin'),
+ (9,'kedar','male','kedar@gmail.com','kedar123','kedar123','8877556644','media/customer/DSC_0057.jpg','customer');
+/*!40000 ALTER TABLE `customer` ENABLE KEYS */;
+
+
+--
+-- Definition of table `order_details`
+--
+
+DROP TABLE IF EXISTS `order_details`;
+CREATE TABLE `order_details` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `price` float DEFAULT NULL,
+  `amount` float DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `order_id` (`order_id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `order_details_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `order_details_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `order_details`
+--
+
+/*!40000 ALTER TABLE `order_details` DISABLE KEYS */;
+INSERT INTO `order_details` (`id`,`order_id`,`product_id`,`quantity`,`price`,`amount`) VALUES 
+ (1,2,7,1,880,880),
+ (2,3,7,1,880,880),
+ (3,3,8,1,960,960),
+ (4,3,12,3,960,2880);
+/*!40000 ALTER TABLE `order_details` ENABLE KEYS */;
+
+
+--
+-- Definition of table `order_status`
+--
+
+DROP TABLE IF EXISTS `order_status`;
+CREATE TABLE `order_status` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  `description` varchar(200) DEFAULT NULL,
+  `person` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `order_status`
+--
+
+/*!40000 ALTER TABLE `order_status` DISABLE KEYS */;
+INSERT INTO `order_status` (`id`,`order_id`,`status`,`date`,`description`,`person`) VALUES 
+ (1,2,'Booked/Pending','2020-10-21','Order Booked By Customer','customer'),
+ (2,3,'Booked/Pending','2020-10-21','Order Booked By Customer','customer'),
+ (3,4,'Booked/Pending','2020-10-21','Order Booked By Customer','customer'),
+ (4,4,'cancelled','2020-10-21','I booked by mistake','customer'),
+ (5,3,'delivered','2020-10-23','delivered to given address','company'),
+ (6,2,'under processing','2020-10-26',NULL,'Admin'),
+ (7,2,'under processing','2020-10-26',NULL,'Admin'),
+ (8,2,'under processing','2020-10-26',NULL,'Admin');
+/*!40000 ALTER TABLE `order_status` ENABLE KEYS */;
+
+
+--
+-- Definition of table `orders`
+--
+
+DROP TABLE IF EXISTS `orders`;
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `date` varchar(20) DEFAULT NULL,
+  `customer_id` int(11) DEFAULT NULL,
+  `address_id` int(11) DEFAULT NULL,
+  `payment_mode` varchar(20) DEFAULT NULL,
+  `payment_status` varchar(20) DEFAULT NULL,
+  `total_amount` float DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `customer_id` (`customer_id`),
+  KEY `address_id` (`address_id`),
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`address_id`) REFERENCES `address` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `orders`
+--
+
+/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` (`id`,`date`,`customer_id`,`address_id`,`payment_mode`,`payment_status`,`total_amount`) VALUES 
+ (2,'2020-10-21',9,3,'COD','Pending',880),
+ (3,'2020-10-21',9,2,'COD','Pending',4720),
+ (4,'2020-10-21',9,2,'COD','Pending',4720);
+/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+
+
+--
+-- Definition of table `product`
+--
+
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `price` int(11) DEFAULT NULL,
+  `size` varchar(5) DEFAULT NULL,
+  `color` varchar(50) DEFAULT NULL,
+  `brand` varchar(100) DEFAULT NULL,
+  `image` varchar(100) DEFAULT NULL,
+  `description` varchar(500) DEFAULT NULL,
+  `stock` int(11) DEFAULT NULL,
+  `shopkeeper_id` int(11) DEFAULT NULL,
+  `selling_price` int(11) DEFAULT NULL,
+  `status` varchar(100) DEFAULT 'pending',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `shopkeeper_id` (`shopkeeper_id`),
+  CONSTRAINT `product_ibfk_1` FOREIGN KEY (`shopkeeper_id`) REFERENCES `shopkeeper` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `product`
+--
+
+/*!40000 ALTER TABLE `product` DISABLE KEYS */;
+INSERT INTO `product` (`id`,`name`,`price`,`size`,`color`,`brand`,`image`,`description`,`stock`,`shopkeeper_id`,`selling_price`,`status`) VALUES 
+ (2,'Pollo T-Shirt Form men',200,'42','red','lee','shopkeeper/media/product/t2.jpg','men wear',100,2,160,'rejected'),
+ (3,'FlameBoyent Pink Top',1200,'M','pink','Lux','shopkeeper/media/product/top1.jpeg','ladies wear, best quality',0,2,960,'approved'),
+ (4,'black and white top',1000,'M','black and white','Layra','shopkeeper/media/product/m1.jpg','for ladies , best quality, good frabric',130,2,800,'rejected'),
+ (5,'ladies v-nack top',500,'M','peach','Layra','shopkeeper/media/product/top6.webp','ladies wear, best quality, pure cotten',400,2,400,'pending'),
+ (6,'branded top',1300,'L','Orange','Lux','shopkeeper/media/product/top4.webp','Ladies wear , ladies top, ',130,2,1040,'pending'),
+ (7,'full sleev top',1100,'M','orange','Lee','shopkeeper/media/product/top3.jpeg','ladies wear ',312,2,880,'approved'),
+ (8,'Regular T-shirt',1200,'M','blue ','Puma','shopkeeper/media/product/t3.jpg','Men wear, best quality t shirt',1002,2,960,'approved'),
+ (9,'v neck T shirt',1200,'L','black and white','Lee','shopkeeper/media/product/t1.jpg','for men ',1000,2,960,'rejected'),
+ (10,'Casual t shirt',1300,'XL','black','Lee','shopkeeper/media/product/t6.webp','Men wear',140,2,1040,'rejected'),
+ (11,'kids t-shirt',800,'32','black','puma','shopkeeper/media/product/kt2.jpg','kids wear',1000,2,640,'approved'),
+ (12,'T-shirt pair',1200,'32','white','puma','shopkeeper/media/product/kt3.webp','kids wear, best quality, fine febric',1004,2,960,'approved'),
+ (13,'Kid\'s  Tshirt',1500,'32','red','Amul','shopkeeper/media/product/kt6.jpg','kids wear , fine quality, best quality, best febrick',1200,2,1200,'rejected');
+/*!40000 ALTER TABLE `product` ENABLE KEYS */;
+
+
+--
+-- Definition of table `product_r`
+--
+
+DROP TABLE IF EXISTS `product_r`;
+CREATE TABLE `product_r` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
+  `weartype_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `product_id` (`product_id`),
+  KEY `category_id` (`category_id`),
+  KEY `weartype_id` (`weartype_id`),
+  CONSTRAINT `product_r_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `product_r_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `product_r_ibfk_3` FOREIGN KEY (`weartype_id`) REFERENCES `wear_type` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `product_r`
+--
+
+/*!40000 ALTER TABLE `product_r` DISABLE KEYS */;
+INSERT INTO `product_r` (`id`,`product_id`,`category_id`,`weartype_id`) VALUES 
+ (1,2,4,1),
+ (2,3,5,2),
+ (3,4,5,2),
+ (4,5,5,2),
+ (5,6,5,2),
+ (6,7,5,2),
+ (7,8,4,1),
+ (8,9,4,1),
+ (9,10,4,1),
+ (10,11,4,3),
+ (11,12,5,3),
+ (12,13,4,3);
+/*!40000 ALTER TABLE `product_r` ENABLE KEYS */;
+
+
+--
+-- Definition of table `queries`
+--
+
+DROP TABLE IF EXISTS `queries`;
+CREATE TABLE `queries` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `email` varchar(200) DEFAULT NULL,
+  `subject` varchar(100) DEFAULT NULL,
+  `message` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `queries`
+--
+
+/*!40000 ALTER TABLE `queries` DISABLE KEYS */;
+INSERT INTO `queries` (`id`,`name`,`email`,`subject`,`message`) VALUES 
+ (1,'vikas','vikas.gist8056@gmail.com','hello','hello hello hello');
+/*!40000 ALTER TABLE `queries` ENABLE KEYS */;
+
+
+--
+-- Definition of table `replies`
+--
+
+DROP TABLE IF EXISTS `replies`;
+CREATE TABLE `replies` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `shopkeeper_id` int(11) DEFAULT NULL,
+  `customer_id` int(11) DEFAULT NULL,
+  `message` varchar(300) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `shopkeeper_id` (`shopkeeper_id`),
+  KEY `customer_id` (`customer_id`),
+  CONSTRAINT `replies_ibfk_1` FOREIGN KEY (`shopkeeper_id`) REFERENCES `shopkeeper` (`id`),
+  CONSTRAINT `replies_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `replies`
+--
+
+/*!40000 ALTER TABLE `replies` DISABLE KEYS */;
+/*!40000 ALTER TABLE `replies` ENABLE KEYS */;
+
+
+--
+-- Definition of table `return_product`
+--
+
+DROP TABLE IF EXISTS `return_product`;
+CREATE TABLE `return_product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `date` varchar(20) DEFAULT NULL,
+  `customer_id` int(11) DEFAULT NULL,
+  `address_id` int(11) DEFAULT NULL,
+  `status` varchar(200) DEFAULT 'request for return',
+  `quantity` int(11) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `return_product`
+--
+
+/*!40000 ALTER TABLE `return_product` DISABLE KEYS */;
+INSERT INTO `return_product` (`id`,`order_id`,`product_id`,`date`,`customer_id`,`address_id`,`status`,`quantity`) VALUES 
+ (17,3,7,'2020-10-23',9,2,'Request for Returning product',1);
+/*!40000 ALTER TABLE `return_product` ENABLE KEYS */;
+
+
+--
+-- Definition of table `review`
+--
+
+DROP TABLE IF EXISTS `review`;
+CREATE TABLE `review` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `email` varchar(200) DEFAULT NULL,
+  `subject` varchar(100) DEFAULT NULL,
+  `message` varchar(500) DEFAULT NULL,
+  `shopkeeper_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `status` varchar(100) DEFAULT 'not replied',
+  PRIMARY KEY (`id`),
+  KEY `shopkeeper_id` (`shopkeeper_id`),
+  KEY `product_id` (`product_id`),
+  CONSTRAINT `review_ibfk_1` FOREIGN KEY (`shopkeeper_id`) REFERENCES `shopkeeper` (`id`),
+  CONSTRAINT `review_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `review`
+--
+
+/*!40000 ALTER TABLE `review` DISABLE KEYS */;
+INSERT INTO `review` (`id`,`name`,`email`,`subject`,`message`,`shopkeeper_id`,`product_id`,`status`) VALUES 
+ (1,'vikas','vikas.gist8056@gmail.com','hello','hello hello hello',2,7,'replied'),
+ (2,'anil','anil@gmail.com','review','this is extremely good product',2,7,'not replied'),
+ (3,'amit','amit@gmail.com','review','good product',2,7,'not replied'),
+ (4,'amit','amit@gmail.com','review','this is a Nice T shirt. I like it most.',2,8,'not replied');
+/*!40000 ALTER TABLE `review` ENABLE KEYS */;
+
+
+--
+-- Definition of table `shopkeeper`
+--
+
+DROP TABLE IF EXISTS `shopkeeper`;
+CREATE TABLE `shopkeeper` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `RN` varchar(100) DEFAULT NULL,
+  `address` varchar(500) DEFAULT NULL,
+  `contact` varchar(15) DEFAULT NULL,
+  `userid` varchar(50) DEFAULT NULL,
+  `stock` int(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `role` varchar(15) DEFAULT NULL,
+  `image` char(200) DEFAULT NULL,
+  `gender` varchar(10) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `pin` varchar(10) DEFAULT NULL,
+  `shopname` varchar(100) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `contact` (`contact`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `shopkeeper`
+--
+
+/*!40000 ALTER TABLE `shopkeeper` DISABLE KEYS */;
+INSERT INTO `shopkeeper` (`id`,`name`,`RN`,`address`,`contact`,`userid`,`stock`,`email`,`role`,`image`,`gender`,`password`,`pin`,`shopname`,`status`) VALUES 
+ (1,'Hansh','SIS12344','chandapur','7470397253','arpitmishra788',10,'arpitmishra788@gmail.com','shopkeeper','media/','male','arpitmishra788','462003','Hans garments','rejected'),
+ (2,'Arpit mishra','7418520','v-Chandapur, post-Udaipur, d-Varanasi, s-Uttar Pradesh','96521753852','arpit788',NULL,'arpitmisra788@gmail.com','shopkeeper','shopkeeper/media/A.jpg','male','arpit788','426002','Arpit garments','approved'),
+ (3,'Himanshu','SIS123456','v-Chandapur, post-Udaipur, d-Varanasi, s-Uttar Pradesh','4565456456','himanshu',NULL,'himanshu@gmail.com','shopkeeper','shopkeeper/media//arpit.jpg','male','himanshu','426003','Himanshu Faishan store','approved'),
+ (4,'adi','SIS12345','v-Chandapur, post-Udaipur, d-Varanasi, s-Uttar Pradesh','4565456454','adi788',NULL,'adi@gmail.com','shopkeeper','shopkeeper/media/B.jpg','male','adi788','462003','Aditi Wear house','approved'),
+ (5,'vikas pathak','rac933393','D 17 NEHRU NAGAR BHOPAL','8878128218','vikas123',NULL,'vikas.gist8056@gmail.com','shopkeeper','shopkeeper/media/arpit2.png','male','vikas123@','462003','Gist Enterprises','pending');
+/*!40000 ALTER TABLE `shopkeeper` ENABLE KEYS */;
+
+
+--
+-- Definition of table `wear_type`
+--
+
+DROP TABLE IF EXISTS `wear_type`;
+CREATE TABLE `wear_type` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `wear_type`
+--
+
+/*!40000 ALTER TABLE `wear_type` DISABLE KEYS */;
+INSERT INTO `wear_type` (`id`,`name`) VALUES 
+ (1,'men'),
+ (2,'women'),
+ (3,'kids');
+/*!40000 ALTER TABLE `wear_type` ENABLE KEYS */;
+
+
+
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
