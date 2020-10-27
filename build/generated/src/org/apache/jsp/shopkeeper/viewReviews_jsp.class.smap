@@ -1,0 +1,22 @@
+SMAP
+viewReviews_jsp.java
+JSP
+*S JSP
+*F
++ 0 viewReviews.jsp
+shopkeeper/viewReviews.jsp
+*L
+5,23:49
+28:72,3
+29,9:75
+38,6:85
+43,6:91
+49:97,3
+50,9:100
+59:109,3
+60,21:112
+81,4:134
+84,9:138
+93:147,3
+94,18:150
+*E

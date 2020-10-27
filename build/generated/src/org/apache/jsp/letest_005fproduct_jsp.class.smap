@@ -1,0 +1,19 @@
+SMAP
+letest_005fproduct_jsp.java
+JSP
+*S JSP
+*F
++ 0 letest_product.jsp
+letest_product.jsp
+*L
+5,15:50
+20,4:66
+23,3:70
+26:73,3
+27,6:76
+33:82,5
+34:87,3
+35,2:90
+37:92,3
+38,3:95
+*E

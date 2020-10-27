@@ -1,0 +1,20 @@
+SMAP
+dashboard_jsp.java
+JSP
+*S JSP
+*F
++ 0 dashboard.jsp
+shopkeeper/dashboard.jsp
+*L
+1,17:44
+18:61,3
+19,29:64
+48:93,10
+49,3:103
+52,6:107
+57:113
+58:114,3
+59,8:117
+67:125,3
+68,13:128
+*E
